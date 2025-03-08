@@ -12,9 +12,9 @@ import sklearn
 app = Flask(__name__)
 
 # Google Drive links (IDs extracted from your links)
-model_url = "https://drive.google.com/file/d/1aq2bGqD1QdU-OGv6t-lNRKDddnzqsHKn/view?usp=sharing"
-label_map_url = "https://drive.google.com/file/d/1Prb-KxeQ-LuBlWtyDSA4W0-9C-JRPO5E/view?usp=sharing"
-scaler_url = "https://drive.google.com/file/d/1jb6ay-oAgURpfh0UfWbtqo5iRtqeZhaW/view?usp=sharing"
+model_url = "https://drive.google.com/file/d/1aq2bGqD1QdU-OGv6t-lNRKDddnzqsHKn/view?usp=drive_link"
+label_map_url = "https://drive.google.com/file/d/1Prb-KxeQ-LuBlWtyDSA4W0-9C-JRPO5E/view?usp=drive_link"
+scaler_url = "https://drive.google.com/file/d/1jb6ay-oAgURpfh0UfWbtqo5iRtqeZhaW/view?usp=drive_link"
 
 # File paths
 model_path = "ISL_SVM_Model.pkl"
