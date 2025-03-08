@@ -5,6 +5,9 @@ from PIL import Image
 import json
 import os
 import gdown  # For downloading from Google Drive
+import joblib
+import sklearn
+
 
 app = Flask(__name__)
 
@@ -17,6 +20,12 @@ scaler_url = "https://drive.google.com/file/d/1jb6ay-oAgURpfh0UfWbtqo5iRtqeZhaW/
 model_path = "ISL_SVM_Model.pkl"
 scaler_path = "scaler.pkl"
 label_map_path = "label_map.json"
+
+# Load model in the old environment
+model = joblib.load("ISL_SVM_Model.pkl")
+
+# Save it in the current Scikit-learn version
+joblib.dump(model, "ISL_SVM_Model_v2.pkl")
 
 # Function to download files if not present
 def download_file(url, output_path):
