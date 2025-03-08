@@ -3,13 +3,40 @@ import joblib
 import numpy as np
 from PIL import Image
 import json
+import os
+import gdown  # For downloading from Google Drive
 
 app = Flask(__name__)
 
-model = joblib.load("ISL_SVM_Model.pkl")
-scaler = joblib.load("scaler.pkl")
+# Google Drive links (IDs extracted from your links)
+model_url = "https://drive.google.com/uc?id=1i80F_jW2RFqkfllSXMDuTNub1Vxd8oEN"
+label_map_url = "https://drive.google.com/uc?id=1nKDMN-JpuMSL7a4AbCu6VZLA3Z3Ay3Pf"
+scaler_url = "https://drive.google.com/uc?id=1LhB9t_gE9EEYjAevsvpoVAzmCXsy6jZ7"
 
-with open("label_map.json", "r") as f:
+# File paths
+model_path = "ISL_SVM_Model.pkl"
+scaler_path = "scaler.pkl"
+label_map_path = "label_map.json"
+
+# Function to download files if not present
+def download_file(url, output_path):
+    if not os.path.exists(output_path):
+        print(f"Downloading {output_path}...")
+        gdown.download(url, output_path, quiet=False)
+    else:
+        print(f"{output_path} already exists.")
+
+# Ensure all required files are downloaded
+download_file(model_url, model_path)
+download_file(label_map_url, label_map_path)
+download_file(scaler_url, scaler_path)
+
+# Load model and scaler
+model = joblib.load(model_path)
+scaler = joblib.load(scaler_path)
+
+# Load label map
+with open(label_map_path, "r") as f:
     label_map = json.load(f)
 
 @app.route("/predict", methods=["POST"])
@@ -25,4 +52,4 @@ def predict():
         return jsonify({"error": str(e)})
 
 if __name__ == "__main__":
-    app.run(port=5000)
+    app.run(port=5000, host="0.0.0.0")
